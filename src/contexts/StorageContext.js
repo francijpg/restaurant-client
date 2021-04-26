@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import services from "../services";
 
-const { firebaseApp, database } = services;
+const { database, storage, firebaseApp } = services;
 
 export const StorageContext = createContext();
 
@@ -10,22 +10,41 @@ export function useStorage() {
 }
 
 function StorageProvider({ children }) {
-  const printService = () => {
-    console.log(firebaseApp);
-  };
+  function setProduct(product) {
+    database.products.add(product);
+  }
 
-  const listService = () => {
-    console.log(database.orders);
-  };
+  function setStorageDirectory() {
+    return storage.ref("products");
+  }
 
-  const listServiceTwo = (id) => {
-    console.log(database.orders.doc(id));
-  };
+  async function setImageUrl(fileName) {
+    // console.log(fileName);
+    // const storageRef = storage.ref()
+    // const fileRef = await storageRef.child(fileName);
+    // const downloadUrl = await fileRef.getDownloadURL();
+    // return downloadUrl;
+    // const x = await storageRef.child(`products`).child(fileName);
+    return await storage.ref("products").child(fileName).getDownloadURL();
+    // console.log(x);
+    // await storage
+    //   .ref()
+    //   .child("products")
+    //   .child(fileName)
+    //   .getDownloadURL();
+
+    // const url = await firebaseApp.storage.ref()
+    //   .child("products")
+    //   .child(name)
+    //   .getDownloadURL();
+  }
 
   const value = {
-    printService,
-    listService,
-    listServiceTwo,
+    firebaseApp,
+    storage,
+    setProduct,
+    setStorageDirectory,
+    setImageUrl,
   };
 
   return (
