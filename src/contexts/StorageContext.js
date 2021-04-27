@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import services from "../services";
 
-const { database, storage, firebaseApp } = services;
+const { database, storage } = services;
 
 export const StorageContext = createContext();
 
@@ -10,41 +10,41 @@ export function useStorage() {
 }
 
 function StorageProvider({ children }) {
-  function setProduct(product) {
-    database.products.add(product);
-  }
+  const setProduct = async (dish) => {
+    return await database.products.add(dish);
+  };
 
-  function setStorageDirectory() {
+  const setStorageDirectory = () => {
     return storage.ref("products");
-  }
+  };
 
-  async function setImageUrl(fileName) {
-    // console.log(fileName);
-    // const storageRef = storage.ref()
-    // const fileRef = await storageRef.child(fileName);
-    // const downloadUrl = await fileRef.getDownloadURL();
-    // return downloadUrl;
-    // const x = await storageRef.child(`products`).child(fileName);
-    return await storage.ref("products").child(fileName).getDownloadURL();
-    // console.log(x);
-    // await storage
-    //   .ref()
-    //   .child("products")
-    //   .child(fileName)
-    //   .getDownloadURL();
+  const setImageUrl = async (fileName) => {
+    const storageRef = storage.ref("products");
+    const imageUrl = await storageRef.child(fileName).getDownloadURL();
+    return imageUrl;
+  };
 
-    // const url = await firebaseApp.storage.ref()
-    //   .child("products")
-    //   .child(name)
-    //   .getDownloadURL();
-  }
+  const setDishAvailability = async (dishId, stockRef) => {
+    const stock = stockRef.current.value === "true";
+    try {
+      await database.products.doc(dishId).update({
+        stock,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getDishes = (order, handleSnapshot) => {
+    return database.products.orderBy(order, "desc").onSnapshot(handleSnapshot);
+  };
 
   const value = {
-    firebaseApp,
-    storage,
     setProduct,
     setStorageDirectory,
     setImageUrl,
+    setDishAvailability,
+    getDishes,
   };
 
   return (
