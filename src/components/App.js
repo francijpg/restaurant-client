@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router";
-import Orders from "./pages/Orders";
-import Menu from "./pages/Menu";
-import NewDish from "./pages/NewDish";
-import Sidebar from "./ui/Sidebar";
+import Orders from "../views/Orders";
+import Menu from "./dishes/organisms/Menu";
+import NewDish from "./dishes/organisms/NewDish";
+import Sidebar from "./layout/Sidebar";
 import StorageContext from "../contexts/StorageContext";
 
 function App() {
