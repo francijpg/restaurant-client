@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import services from "../services";
 
 const { database, storage } = services;
@@ -10,6 +10,8 @@ export function useStorage() {
 }
 
 function StorageProvider({ children }) {
+  const [dishImageUrl, setDishImageUrl] = useState("");
+
   const setProduct = async (dish) => {
     return await database.products.add(dish);
   };
@@ -21,7 +23,7 @@ function StorageProvider({ children }) {
   const setImageUrl = async (fileName) => {
     const storageRef = storage.ref("products");
     const imageUrl = await storageRef.child(fileName).getDownloadURL();
-    return imageUrl;
+    setDishImageUrl(imageUrl)
   };
 
   const setDishAvailability = async (dishId, stockRef) => {
@@ -40,6 +42,7 @@ function StorageProvider({ children }) {
   };
 
   const value = {
+    dishImageUrl,
     setProduct,
     setStorageDirectory,
     setImageUrl,
