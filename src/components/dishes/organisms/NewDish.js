@@ -1,77 +1,79 @@
-import React, { useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useStorage } from "../../../contexts/StorageContext";
-import { useNavigate } from "react-router-dom";
-import FileUploader from "react-firebase-file-uploader";
+import React from "react";
+// import { useFormik } from "formik";
+// import * as Yup from "yup";
+// import { useStorage } from "../../../contexts/StorageContext";
+// import { useNavigate } from "react-router-dom";
+// import FileUploader from "react-firebase-file-uploader";
+import FormRegisterDish from "../molecules/FormRegisterDish";
 
 const NewDish = () => {
-  const [progressImg, setProgressImg] = useState(0);
-  const [uploadingImg, setUploadingImg] = useState(false);
-  const [urlImg, setUrlImg] = useState("");
+  // const [progressImg, setProgressImg] = useState(0);
+  // const [uploadingImg, setUploadingImg] = useState(false);
+  // const [urlImg, setUrlImg] = useState("");
 
-  const { setProduct, setStorageDirectory, setImageUrl } = useStorage();
-  const navigate = useNavigate();
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      price: "",
-      category: "",
-      imageRef: "",
-      description: "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string()
-        .min(3, "The dishes must be at least 3 characters long")
-        .required("The name of the dish is required"),
-      price: Yup.number()
-        .min(1, "You must add a number")
-        .required("Price is required"),
-      category: Yup.string().required("Category is required"),
-      description: Yup.string()
-        .min(10, "Description must be longer")
-        .required("Description is required"),
-    }),
-    onSubmit: async (dish) => {
-      try {
-        dish.stock = true;
-        dish.imageRef = urlImg;
+  // const { setProduct, setStorageDirectory, setImageUrl } = useStorage();
+  // const navigate = useNavigate();
+  // const formik = useFormik({
+  //   initialValues: {
+  //     name: "",
+  //     price: "",
+  //     category: "",
+  //     imageRef: "",
+  //     description: "",
+  //   },
+  //   validationSchema: Yup.object({
+  //     name: Yup.string()
+  //       .min(3, "The dishes must be at least 3 characters long")
+  //       .required("The name of the dish is required"),
+  //     price: Yup.number()
+  //       .min(1, "You must add a number")
+  //       .required("Price is required"),
+  //     category: Yup.string().required("Category is required"),
+  //     description: Yup.string()
+  //       .min(10, "Description must be longer")
+  //       .required("Description is required"),
+  //   }),
+  //   onSubmit: async (dish) => {
+  //     try {
+  //       dish.stock = true;
+  //       dish.imageRef = urlImg;
 
-        await setProduct(dish);
-        navigate("/menu");
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  });
+  //       await setProduct(dish);
+  //       navigate("/menu");
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   },
+  // });
 
-  // Todo sobre las imagenes
-  const handleUploadStart = () => {
-    setProgressImg(0);
-    setUploadingImg(true);
-  };
+  // // Todo sobre las imagenes
+  // const handleUploadStart = () => {
+  //   setProgressImg(0);
+  //   setUploadingImg(true);
+  // };
 
-  const handleUploadError = (error) => {
-    setUploadingImg(false);
-    console.log(error);
-  };
+  // const handleUploadError = (error) => {
+  //   setUploadingImg(false);
+  //   console.log(error);
+  // };
 
-  const handleUploadSuccess = async (productName) => {
-    setProgressImg(100);
-    setUploadingImg(false);
-    const url = await setImageUrl(productName);
-    setUrlImg(url);
-    // console.log(url);
-  };
+  // const handleUploadSuccess = async (productName) => {
+  //   setProgressImg(100);
+  //   setUploadingImg(false);
+  //   const url = await setImageUrl(productName);
+  //   setUrlImg(url);
+  //   // console.log(url);
+  // };
 
-  const handleProgress = (progress) => {
-    setProgressImg(progress);
-  };
+  // const handleProgress = (progress) => {
+  //   setProgressImg(progress);
+  // };
 
   return (
     <>
       <h1 className="text-3xl font-light mb-4">New Dishes</h1>
-      <form onSubmit={formik.handleSubmit}>
+      <FormRegisterDish />
+      {/* <form onSubmit={formik.handleSubmit}>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -179,14 +181,6 @@ const NewDish = () => {
             onUploadSuccess={handleUploadSuccess}
             onProgress={handleProgress}
           />
-          {/* <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="image"
-            type="file"
-            value={formik.values.image}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          /> */}
         </div>
 
         {uploadingImg && (
@@ -236,7 +230,7 @@ const NewDish = () => {
           className="bg-gray-800 hover:bg-gray-900 w-full mt-5 p-2 text-white uppercase font-bold"
           value="Add Dish"
         />
-      </form>
+      </form> */}
     </>
   );
 };
