@@ -23,7 +23,7 @@ function StorageProvider({ children }) {
   const setImageUrl = async (fileName) => {
     const storageRef = storage.ref("products");
     const imageUrl = await storageRef.child(fileName).getDownloadURL();
-    setDishImageUrl(imageUrl)
+    setDishImageUrl(imageUrl);
   };
 
   const setDishAvailability = async (dishId, stockRef) => {
@@ -41,6 +41,26 @@ function StorageProvider({ children }) {
     return database.products.orderBy(order, "desc").onSnapshot(handleSnapshot);
   };
 
+  const getOrders = (handleSnapshot) => {
+    return database.orders
+      .where("completed", "==", false)
+      .onSnapshot(handleSnapshot);
+  };
+
+  const setOrderTime = async (id, deliveryTime) => {
+    const time = await database.orders.doc(id).update({
+      deliveryTime,
+    });
+    return time;
+  };
+
+  const setOrderCompleted = async (id) => {
+    const status = await database.orders.doc(id).update({
+      completed: true,
+    });
+    return status;
+  };
+
   const value = {
     dishImageUrl,
     setProduct,
@@ -48,6 +68,9 @@ function StorageProvider({ children }) {
     setImageUrl,
     setDishAvailability,
     getDishes,
+    getOrders,
+    setOrderTime,
+    setOrderCompleted,
   };
 
   return (
