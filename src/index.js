@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./components/App";
+import AppRouter from "./routes/AppRouter";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/tailwind.css";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -8,7 +8,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 ReactDOM.render(
   <Router>
     <React.StrictMode>
-      <App />
+      <AppRouter />
     </React.StrictMode>
   </Router>,
   document.getElementById("root")
