@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import * as ROUTES from "../constants/routes";
 
@@ -13,19 +13,21 @@ import StorageContext from "../contexts/StorageContext";
 
 function AppRouter() {
   return (
-    <StorageContext>
-      <div className="md:flex min-h-screen">
-        <Sidebar />
-        <div className="md:w-2/5 xl:w-4/5 p-6">
-          <Routes>
-            <Route path={ROUTES.DASHBOARD} element={<Orders />} />
-            <Route path={ROUTES.DISHES_MENU} element={<Menu />} />
-            <Route path={ROUTES.NEW_DISH} element={<NewDish />} />
-            <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
-          </Routes>
+    <Router>
+      <StorageContext>
+        <div className="md:flex min-h-screen">
+          <Sidebar />
+          <div className="md:w-2/5 xl:w-4/5 p-6">
+            <Routes>
+              <Route path={ROUTES.DASHBOARD} element={<Orders />} />
+              <Route path={ROUTES.DISHES_MENU} element={<Menu />} />
+              <Route path={ROUTES.NEW_DISH} element={<NewDish />} />
+              <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </StorageContext>
+      </StorageContext>
+    </Router>
   );
 }
 
