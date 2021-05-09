@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { useStorage } from "../../../contexts/StorageContext";
 import { useNavigate } from "react-router";
 import DishImageUploader from "./DishImageUploader";
+import * as ROUTES from "../../../constants/routes";
 
 const FormRegisterDish = () => {
   const INITIAL_STATE = {
@@ -36,7 +37,7 @@ const FormRegisterDish = () => {
         dish.imageRef = dishImageUrl;
         // console.log(dish);
         await setProduct(dish);
-        navigate("/menu");
+        navigate(ROUTES.DISHES_MENU);
       } catch (error) {
         console.log(error);
       }
