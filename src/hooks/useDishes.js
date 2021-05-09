@@ -1,16 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useStorage } from "../contexts/StorageContext";
 
 const useDishes = (order) => {
   const [dishes, setDishes] = useState([]);
   const { getDishes } = useStorage();
-  const isMounted = useRef(true);
 
   useEffect(() => {
-    getDishes(order, handleSnapshot);
-    return () => {
-      isMounted.current = false;
-    };
+    const listener = getDishes(order, handleSnapshot);
+    return () => listener();
   }, [getDishes, order]);
 
   function handleSnapshot(snapshot) {
