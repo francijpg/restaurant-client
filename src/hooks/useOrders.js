@@ -1,16 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useStorage } from "../contexts/StorageContext";
 
 const useOrders = () => {
   const [orders, setOrders] = useState([]);
   const { getOrders } = useStorage();
-  const isMounted = useRef(true);
 
   useEffect(() => {
-    getOrders(handleSnapshot);
-    return () => {
-      isMounted.current = false;
-    };
+    const listener = getOrders(handleSnapshot);
+    return () => listener();
   }, [getOrders]);
 
   function handleSnapshot(snapshot) {
