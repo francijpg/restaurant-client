@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import * as ROUTES from "../../constants/routes";
 
 const Sidebar = () => {
   return (
@@ -18,7 +19,7 @@ const Sidebar = () => {
             className="p-1 text-gray-400 block hover:bg-yellow-500 hover:text-gray-900"
             activeClassName="text-yellow-500"
             end
-            to="/"
+            to={ROUTES.DASHBOARD}
           >
             Orders
           </NavLink>
@@ -26,7 +27,7 @@ const Sidebar = () => {
             className="p-1 text-gray-400 block hover:bg-yellow-500 hover:text-gray-900"
             activeClassName="text-yellow-500"
             end
-            to="/menu"
+            to={ROUTES.DISHES_MENU}
           >
             Menu
           </NavLink>
