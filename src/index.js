@@ -3,14 +3,11 @@ import ReactDOM from "react-dom";
 import AppRouter from "./routes/AppRouter";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/tailwind.css";
-import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
-  <Router>
-    <React.StrictMode>
-      <AppRouter />
-    </React.StrictMode>
-  </Router>,
+  <React.StrictMode>
+    <AppRouter />
+  </React.StrictMode>,
   document.getElementById("root")
 );
 
