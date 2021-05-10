@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Title from "../components/common/Title";
 import FormRegisterDish from "../components/dishes/molecules/FormRegisterDish";
 
 const NewDish = () => {
+  useEffect(() => {
+    document.title = "New Dish - RestaurantApp";
+  }, []);
+
   return (
     <>
-      <h1 className="text-3xl font-light mb-4">New Dishes</h1>
+      <Title>new dish</Title>
       <FormRegisterDish />
     </>
   );
