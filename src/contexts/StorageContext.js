@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import services from "../services";
+import * as MESSAGES from "../constants/providers";
 
 const { database, storage } = services;
 
@@ -11,6 +12,7 @@ export function useStorage() {
 
 function StorageProvider({ children }) {
   const [dishImageUrl, setDishImageUrl] = useState("");
+  const [storageError, setStorageError] = useState("");
 
   const setProduct = async (dish) => {
     return await database.products.add(dish);
@@ -29,16 +31,24 @@ function StorageProvider({ children }) {
   const setDishAvailability = async (dishId, stockRef) => {
     const stock = stockRef.current.value === "true";
     try {
-      await database.products.doc(dishId).update({
+      await database.products.doc("dishId").update({
         stock,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error.message);
+      setStorageError(MESSAGES.STORAGE_MESSAGE_ERROR);
     }
   };
 
   const getDishes = (order, handleSnapshot) => {
-    return database.products.orderBy(order, "desc").onSnapshot(handleSnapshot);
+    try {
+      const dishes = database.products
+        .orderBy(order, "desc")
+        .onSnapshot(handleSnapshot);
+      return dishes;
+    } catch (error) {
+      // console.log(error.message);
+    }
   };
 
   const getOrders = (handleSnapshot) => {
@@ -63,6 +73,8 @@ function StorageProvider({ children }) {
 
   const value = {
     dishImageUrl,
+    storageError,
+    setStorageError,
     setProduct,
     setStorageDirectory,
     setImageUrl,
