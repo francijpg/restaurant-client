@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useStorage } from "../../../contexts/StorageContext";
 import { useNavigate } from "react-router";
 import DishImageUploader from "./DishImageUploader";
 import * as ROUTES from "../../../constants/routes";
+import * as MESSAGES from "../../../constants/providers";
 
 const FormRegisterDish = () => {
   const INITIAL_STATE = {
@@ -15,6 +16,8 @@ const FormRegisterDish = () => {
     description: "",
   };
   const { setProduct, dishImageUrl } = useStorage();
+  const [error, setError] = useState("");
+  
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: INITIAL_STATE,
@@ -29,23 +32,22 @@ const FormRegisterDish = () => {
       description: Yup.string()
         .min(10, "Description must be longer")
         .required("Description is required"),
-      // imageRef: Yup.string().required("Image is required"),
     }),
     onSubmit: async (dish) => {
       try {
         dish.stock = true;
         dish.imageRef = dishImageUrl;
-        // console.log(dish);
         await setProduct(dish);
         navigate(ROUTES.DISHES_MENU);
       } catch (error) {
-        console.log(error);
+        setError(MESSAGES.STORAGE_MESSAGE_ERROR);
       }
     },
   });
 
   return (
     <>
+      {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
       <form onSubmit={formik.handleSubmit}>
         <div className="mb-4">
           <label
