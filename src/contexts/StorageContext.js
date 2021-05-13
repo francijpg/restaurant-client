@@ -14,9 +14,7 @@ function StorageProvider({ children }) {
   const [dishImageUrl, setDishImageUrl] = useState("");
   const [storageError, setStorageError] = useState("");
 
-  const setProduct = async (dish) => {
-    return await database.products.add(dish);
-  };
+  const setProduct = async (dish) => await database.products.add(dish);
 
   const setStorageDirectory = () => {
     return storage.ref("products");
@@ -35,7 +33,6 @@ function StorageProvider({ children }) {
         stock,
       });
     } catch (error) {
-      // console.log(error.message);
       setStorageError(MESSAGES.STORAGE_MESSAGE_ERROR);
     }
   };
@@ -47,7 +44,8 @@ function StorageProvider({ children }) {
         .onSnapshot(handleSnapshot);
       return dishes;
     } catch (error) {
-      // console.log(error.message);
+      // console.log(error.message)
+      setStorageError(MESSAGES.STORAGE_MESSAGE_ERROR);
     }
   };
 
