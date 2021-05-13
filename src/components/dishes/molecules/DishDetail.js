@@ -8,9 +8,6 @@ const DishDetail = ({ dish }) => {
 
   return (
     <div className="w-full px-3 mb-4">
-      {/* {storageError && (
-        <p className="mb-4 text-xs text-red-primary">{storageError}</p>
-      )} */}
       <div className="p-5 shadow-md bg-white">
         <div className="lg:flex">
           <div className="lg:w-5/12 xl:w-3/12">
