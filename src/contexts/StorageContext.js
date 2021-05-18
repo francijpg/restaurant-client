@@ -50,9 +50,15 @@ function StorageProvider({ children }) {
   };
 
   const getOrders = (handleSnapshot) => {
-    return database.orders
-      .where("completed", "==", false)
-      .onSnapshot(handleSnapshot);
+    try {
+      const orders = database.orders
+        .where("completed", "==", false)
+        .onSnapshot(handleSnapshot);
+      return orders;
+    } catch (error) {
+      // console.log(error.message)
+      setStorageError(MESSAGES.STORAGE_MESSAGE_ERROR);
+    }
   };
 
   const setOrderTime = async (id, deliveryTime) => {
