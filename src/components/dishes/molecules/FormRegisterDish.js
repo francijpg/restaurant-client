@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useStorage } from "../../../contexts/StorageContext";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 import DishImageUploader from "./DishImageUploader";
 import * as ROUTES from "../../../constants/routes";
 import * as MESSAGES from "../../../constants/providers";
+import { useHistory } from "react-router-dom";
+import Button from "../../common/Button";
 
 const FormRegisterDish = () => {
   const INITIAL_STATE = {
@@ -17,8 +19,9 @@ const FormRegisterDish = () => {
   };
   const { setProduct, dishImageUrl } = useStorage();
   const [error, setError] = useState("");
-  
-  const navigate = useNavigate();
+
+  // const navigate = useNavigate();
+  const history = useHistory();
   const formik = useFormik({
     initialValues: INITIAL_STATE,
     validationSchema: Yup.object({
@@ -38,7 +41,8 @@ const FormRegisterDish = () => {
         dish.stock = true;
         dish.imageRef = dishImageUrl;
         await setProduct(dish);
-        navigate(ROUTES.DISHES_MENU);
+        // navigate(ROUTES.DISHES_MENU);
+        history.push(ROUTES.DISHES_MENU);
       } catch (error) {
         setError(MESSAGES.STORAGE_MESSAGE_ERROR);
       }
@@ -164,11 +168,12 @@ const FormRegisterDish = () => {
           </div>
         ) : null}
 
-        <input
+        {/* <input
           type="submit"
           className="bg-gray-800 hover:bg-gray-900 w-full mt-5 p-2 text-white uppercase font-bold"
           value="Add Dish"
-        />
+        /> */}
+        <Button type="submit">add dish</Button>
       </form>
     </>
   );
