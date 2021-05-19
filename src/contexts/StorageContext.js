@@ -10,7 +10,7 @@ export function useStorage() {
   return useContext(StorageContext);
 }
 
-function StorageProvider({ children }) {
+export function StorageProvider({ children }) {
   const [dishImageUrl, setDishImageUrl] = useState("");
   const [storageError, setStorageError] = useState("");
 
@@ -29,7 +29,7 @@ function StorageProvider({ children }) {
   const setDishAvailability = async (dishId, stockRef) => {
     const stock = stockRef.current.value === "true";
     try {
-      await database.products.doc("dishId").update({
+      await database.products.doc(dishId).update({
         stock,
       });
     } catch (error) {
@@ -93,5 +93,3 @@ function StorageProvider({ children }) {
     <StorageContext.Provider value={value}>{children}</StorageContext.Provider>
   );
 }
-
-export default StorageProvider;
