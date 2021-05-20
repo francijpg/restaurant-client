@@ -9,12 +9,10 @@ const Login = () => {
 
   return (
     <>
-      <div className="md:w-4/5 xl:w-3/5 mx-auto mb-32">
-        <Title align="center">create account</Title>
-        <div className="flex justify-center mt-5">
-          <div className="w-full max-w-lg">
-            <SignUpForm />
-          </div>
+      <div className="bg-gray-800 min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="bg-gray-300 max-w-md w-full space-y-8 p-8 rounded shadow-lg">
+          <Title align="center">create account</Title>
+          <SignUpForm />
         </div>
       </div>
     </>
