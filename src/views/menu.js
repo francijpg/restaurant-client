@@ -8,11 +8,13 @@ import * as ROUTES from "../constants/routes";
 
 import useDishes from "../hooks/useDishes";
 import { useStorage } from "../contexts/StorageContext";
+import { useAuth } from "../contexts/AuthContext";
 
 const Menu = () => {
   const { dishes } = useDishes("name");
   const { storageError, setStorageError } = useStorage();
-
+  const { currentUser } = useAuth();
+  
   useEffect(() => {
     document.title = "Menu - RestaurantApp";
     setStorageError("");
@@ -21,6 +23,7 @@ const Menu = () => {
 
   return (
     <>
+      {currentUser ? <div>{currentUser.uid} - {currentUser.displayName}</div> : <div>No identificado</div>}
       <Title>menu</Title>
       {storageError && (
         <p className="mb-4 text-xs text-red-primary">{storageError}</p>
