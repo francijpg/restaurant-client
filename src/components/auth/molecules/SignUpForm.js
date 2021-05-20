@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useHistory } from "react-router";
@@ -11,7 +11,8 @@ import { useAuth } from "../../../contexts/AuthContext";
 import * as ROUTES from "../../../constants/routes";
 
 const SignUpForm = () => {
-  const { setSignUp } = useAuth();
+  const { setSignUp, checkUserNameExist } = useAuth();
+  const [error, setError] = useState("");
   const history = useHistory();
   const formik = useFormik({
     initialValues: {
@@ -30,15 +31,22 @@ const SignUpForm = () => {
     }),
     onSubmit: async (values) => {
       try {
-        await setSignUp(values);
-        history.push(ROUTES.DASHBOARD);
+        const usernameExists = await checkUserNameExist(values.name);
+        if (!usernameExists.length) {
+          await setSignUp(values);
+          history.push(ROUTES.DASHBOARD);
+        } else {
+          setError("That username is already taken, please try another.");
+        }
       } catch (error) {
         console.log(error);
       }
     },
   });
+
   return (
     <>
+      {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
       <form
         className="bg-white rounded shadow-md px-8 pt-6 pb-8 mb-4"
         onSubmit={formik.handleSubmit}
@@ -83,6 +91,12 @@ const SignUpForm = () => {
         </div>
 
         <Button type="submit">sign up</Button>
+        <Button
+          color="bg-gray-500 hover:bg-gray-600"
+          onClick={() => history.push(ROUTES.LOGIN)}
+        >
+          log in
+        </Button>
       </form>
     </>
   );
