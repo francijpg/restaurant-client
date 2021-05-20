@@ -9,19 +9,30 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
+// const initialState = {
+//   user: null,
+//   authenticated: false,
+//   needVerification: false,
+// };
+
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
+  const [needVerification, setNeedVerification] = useState(false);
   // const [loading, setLoading] = useState(true);
 
+  const checkUserNameExist = async (username) => {
+    const result = await database.users
+      .where("userName", "==", username.toLowerCase())
+      .get();
+    return result.docs.map((user) => user.data().length > 0);
+  };
+
   const setSignUp = async ({ name, email, password }) => {
-    // 1. validate if username exists inside firebase
-    // 2. create user
     const createdUserResult = await auth.createUserWithEmailAndPassword(
       email,
       password
     );
     const { user } = createdUserResult;
-    // 3. save user with the correct format
     if (user) {
       await user.updateProfile({ displayName: name });
       const userData = {
@@ -32,6 +43,7 @@ export function AuthProvider({ children }) {
       };
       await database.users.doc(user.uid).set(userData);
       // 4. verify account via email
+      setNeedVerification(true);
       await user.sendEmailVerification();
     }
   };
@@ -46,8 +58,15 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
-      console.log(user);
+      if (user) {
+        console.log(user);
+        setCurrentUser(user);
+        const { emailVerified } = user;
+
+        if (!emailVerified) {
+          setNeedVerification(true);
+        }
+      }
       // setLoading(false);
     });
 
@@ -56,8 +75,10 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
+    needVerification,
     setSignUp,
     setLogIn,
+    checkUserNameExist,
   };
 
   return (
