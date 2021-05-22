@@ -1,8 +1,17 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+
 import * as ROUTES from "../../constants/routes";
+// import * as COLORS from "../../constants/colors";
+export const PRIMARY = "ecc94b";
 
 const Sidebar = () => {
+  const currentLocation = useLocation().pathname;
+  const locations = [
+    { to: ROUTES.DASHBOARD, name: "Orders" },
+    { to: ROUTES.DISHES_MENU, name: "Menu" },
+  ];
+
   return (
     <div className="md:w-2/6 xl:w-1/5 bg-gray-800">
       <div className="p-6">
@@ -15,22 +24,17 @@ const Sidebar = () => {
         </p>
 
         <nav className="mt-10">
-          <NavLink
-            className="p-1 text-gray-400 block hover:bg-yellow-500 hover:text-gray-900"
-            activeClassName="text-yellow-500"
-            end
-            to={ROUTES.DASHBOARD}
-          >
-            Orders
-          </NavLink>
-          <NavLink
-            className="p-1 text-gray-400 block hover:bg-yellow-500 hover:text-gray-900"
-            activeClassName="text-yellow-500"
-            end
-            to={ROUTES.DISHES_MENU}
-          >
-            Menu
-          </NavLink>
+          {locations.map((value, index) => (
+            <NavLink
+              className={`p-1 text-gray-400 block hover:bg-yellow-500 hover:text-gray-900 ${
+                value.to === currentLocation ? "text-yellow-400" : null
+              }`}
+              key={index}
+              to={value.to}
+            >
+              {value.name}
+            </NavLink>
+          ))}
         </nav>
       </div>
     </div>
