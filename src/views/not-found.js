@@ -9,9 +9,11 @@ export default function NotFound() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-screen-lg">
-      <Title>not found!</Title>
-      <Link route={ROUTES.DASHBOARD}>back to homepage</Link>
-    </div>
+    <>
+      <div className="text-center mx-auto max-w-screen-lg mt-10">
+        <Title align="center">not found!</Title>
+        <Link route={ROUTES.DASHBOARD}>back to homepage</Link>
+      </div>
+    </>
   );
 }
