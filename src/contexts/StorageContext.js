@@ -44,7 +44,6 @@ export function StorageProvider({ children }) {
         .onSnapshot(handleSnapshot);
       return dishes;
     } catch (error) {
-      // console.log(error.message)
       setStorageError(MESSAGES.STORAGE_MESSAGE_ERROR);
     }
   };
@@ -56,7 +55,6 @@ export function StorageProvider({ children }) {
         .onSnapshot(handleSnapshot);
       return orders;
     } catch (error) {
-      // console.log(error.message)
       setStorageError(MESSAGES.STORAGE_MESSAGE_ERROR);
     }
   };
