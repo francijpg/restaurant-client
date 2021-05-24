@@ -1,8 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 import * as ROUTES from "../constants/routes";
-
-import Sidebar from "../components/layout/Sidebar";
 
 import Orders from "../views/orders";
 import Menu from "../views/menu";
@@ -21,20 +18,15 @@ function AppRouter() {
     <Router>
       <AuthProvider>
         <StorageProvider>
-        <Header />
-          <div className="md:flex min-h-screen">
-            <Sidebar />
-            <div className="md:w-2/5 xl:w-4/5 p-6">
-              <Switch>
-                <Route path={ROUTES.SIGN_UP} component={SignUp} />
-                <Route path={ROUTES.LOGIN} component={LogIn} />
-                <PrivateRoute exact path={ROUTES.DASHBOARD} component={Orders} />
-                <Route path={ROUTES.DISHES_MENU} component={Menu} />
-                <Route path={ROUTES.NEW_DISH} component={NewDish} />
-                <Route path={ROUTES.NOT_FOUND} component={NotFound} />
-              </Switch>
-            </div>
-          </div>
+          <Header />
+          <Switch>
+            <Route path={ROUTES.SIGN_UP} component={SignUp} />
+            <Route path={ROUTES.LOGIN} component={LogIn} />
+            <PrivateRoute exact path={ROUTES.DASHBOARD} component={Orders} />
+            <PrivateRoute exact path={ROUTES.DISHES_MENU} component={Menu} />
+            <PrivateRoute exact path={ROUTES.NEW_DISH} component={NewDish} />
+            <Route path={ROUTES.NOT_FOUND} component={NotFound} />
+          </Switch>
         </StorageProvider>
       </AuthProvider>
     </Router>
