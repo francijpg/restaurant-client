@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useHistory } from "react-router";
@@ -8,10 +8,13 @@ import Input from "../../common/Input";
 import FormErrorMessage from "../atoms/FormErrorMessage";
 
 import { useAuth } from "../../../contexts/AuthContext";
+
 import * as ROUTES from "../../../constants/routes";
+import * as MESSAGES from "../../../constants/providers";
 
 const LogInForm = () => {
   const { setLogIn } = useAuth();
+  const [error, setError] = useState("");
   const history = useHistory();
   const formik = useFormik({
     initialValues: {
@@ -29,13 +32,14 @@ const LogInForm = () => {
         await setLogIn(values);
         history.push(ROUTES.DASHBOARD);
       } catch (error) {
-        console.log(error);
+        setError(MESSAGES.STORAGE_MESSAGE_ERROR);
       }
     },
   });
 
   return (
     <>
+      {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
       <form
         className="bg-white rounded shadow-md px-8 pt-6 pb-8 mb-4"
         onSubmit={formik.handleSubmit}
@@ -68,7 +72,12 @@ const LogInForm = () => {
         </div>
 
         <Button type="submit">log in</Button>
-        <Button color="bg-gray-500 hover:bg-gray-600" onClick={()=> history.push(ROUTES.SIGN_UP)}>sign up</Button>
+        <Button
+          color="bg-gray-500 hover:bg-gray-600"
+          onClick={() => history.push(ROUTES.SIGN_UP)}
+        >
+          sign up
+        </Button>
       </form>
     </>
   );
