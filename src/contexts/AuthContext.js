@@ -9,12 +9,6 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-// const initialState = {
-//   user: null,
-//   authenticated: false,
-//   needVerification: false,
-// };
-
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("authUser"))
@@ -35,6 +29,7 @@ export function AuthProvider({ children }) {
       password
     );
     const { user } = createdUserResult;
+
     if (user) {
       await user.updateProfile({ displayName: name });
       const userData = {
@@ -44,18 +39,14 @@ export function AuthProvider({ children }) {
         createdAt: firebaseApp.firestore.FieldValue.serverTimestamp(),
       };
       await database.users.doc(user.uid).set(userData);
-      // 4. verify account via email
+
       setNeedVerification(true);
       await user.sendEmailVerification();
     }
   };
 
   const setLogIn = async ({ email, password }) => {
-    try {
-      return auth.signInWithEmailAndPassword(email, password);
-    } catch (error) {
-      console.log(error);
-    }
+    return auth.signInWithEmailAndPassword(email, password);
   };
 
   const setLogOut = () => {
@@ -71,33 +62,9 @@ export function AuthProvider({ children }) {
     }));
   };
 
-  // const checkUserExists = async () => {
-  //   const unsubscribe = auth.onAuthStateChanged((authUser) => {
-  //     if (authUser) {
-  //       // console.log(authUser);
-  //       // setLoading(false);
-  //       localStorage.setItem("authUser", JSON.stringify(authUser));
-  //       setCurrentUser(authUser);
-
-  //       const { emailVerified } = authUser;
-
-  //       if (!emailVerified) {
-  //         setNeedVerification(true);
-  //       }
-  //     } else {
-  //       localStorage.removeItem("authUser");
-  //     }
-  //     return () => {
-  //       unsubscribe();
-  //     };
-  //   });
-  // };
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        // console.log("entra");
-        // setLoading(false);
         localStorage.setItem("authUser", JSON.stringify(authUser));
         setCurrentUser(authUser);
 
@@ -107,14 +74,12 @@ export function AuthProvider({ children }) {
           setNeedVerification(true);
         }
       } else {
-        // console.log("sale");
         localStorage.removeItem("authUser");
         setCurrentUser(null);
       }
     });
 
-    return unsubscribe;
-    // return () => unsubscribe();
+    return () => unsubscribe();
   }, []);
 
   const value = {
@@ -125,13 +90,7 @@ export function AuthProvider({ children }) {
     setLogOut,
     checkUserNameExist,
     getUserByUserId,
-    // checkUserExists,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {/* {!loading && children} */}
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
