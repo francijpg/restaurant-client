@@ -8,7 +8,9 @@ import FormErrorMessage from "../atoms/FormErrorMessage";
 import Button from "../../common/Button";
 
 import { useAuth } from "../../../contexts/AuthContext";
+
 import * as ROUTES from "../../../constants/routes";
+import * as MESSAGES from "../../../constants/providers";
 
 const SignUpForm = () => {
   const { setSignUp, checkUserNameExist } = useAuth();
@@ -39,7 +41,7 @@ const SignUpForm = () => {
           setError("That username is already taken, please try another.");
         }
       } catch (error) {
-        console.log(error);
+        setError(MESSAGES.STORAGE_MESSAGE_ERROR);
       }
     },
   });
