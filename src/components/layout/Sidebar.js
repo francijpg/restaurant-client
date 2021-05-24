@@ -2,8 +2,6 @@ import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import * as ROUTES from "../../constants/routes";
-// import * as COLORS from "../../constants/colors";
-export const PRIMARY = "ecc94b";
 
 const Sidebar = () => {
   const currentLocation = useLocation().pathname;
