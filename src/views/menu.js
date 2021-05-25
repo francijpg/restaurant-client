@@ -8,13 +8,12 @@ import * as ROUTES from "../constants/routes";
 
 import useDishes from "../hooks/useDishes";
 import { useStorage } from "../contexts/StorageContext";
-import { useAuth } from "../contexts/AuthContext";
+import Sidebar from "../components/layout/Sidebar";
 
 const Menu = () => {
   const { dishes } = useDishes("name");
   const { storageError, setStorageError } = useStorage();
-  const { currentUser } = useAuth();
-  
+
   useEffect(() => {
     document.title = "Menu - RestaurantApp";
     setStorageError("");
@@ -23,13 +22,18 @@ const Menu = () => {
 
   return (
     <>
-      {currentUser ? <div>{currentUser.uid} - {currentUser.displayName}</div> : <div>No identificado</div>}
-      <Title>menu</Title>
-      {storageError && (
-        <p className="mb-4 text-xs text-red-primary">{storageError}</p>
-      )}
-      <Link route={ROUTES.NEW_DISH}>add dish</Link>
-      {dishes && dishes.map((dish) => <DishDetail key={dish.id} dish={dish} />)}
+      <div className="md:flex min-h-screen">
+        <Sidebar />
+        <div className="md:w-2/5 xl:w-4/5 p-6">
+          <Title>menu</Title>
+          {storageError && (
+            <p className="mb-4 text-xs text-red-primary">{storageError}</p>
+          )}
+          <Link route={ROUTES.NEW_DISH}>add dish</Link>
+          {dishes &&
+            dishes.map((dish) => <DishDetail key={dish.id} dish={dish} />)}
+        </div>
+      </div>
     </>
   );
 };
