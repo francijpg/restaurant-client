@@ -15,7 +15,7 @@ const DishImageUploader = () => {
 
   const handleUploadError = (error) => {
     setUploadingImg(false);
-    console.log(error);
+    // console.log(error);
   };
 
   const handleUploadSuccess = async (productName) => {
