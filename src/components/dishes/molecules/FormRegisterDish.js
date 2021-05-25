@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useStorage } from "../../../contexts/StorageContext";
-// import { useNavigate } from "react-router";
 import DishImageUploader from "./DishImageUploader";
 import * as ROUTES from "../../../constants/routes";
 import * as MESSAGES from "../../../constants/providers";
@@ -20,7 +19,6 @@ const FormRegisterDish = () => {
   const { setProduct, dishImageUrl } = useStorage();
   const [error, setError] = useState("");
 
-  // const navigate = useNavigate();
   const history = useHistory();
   const formik = useFormik({
     initialValues: INITIAL_STATE,
@@ -41,7 +39,6 @@ const FormRegisterDish = () => {
         dish.stock = true;
         dish.imageRef = dishImageUrl;
         await setProduct(dish);
-        // navigate(ROUTES.DISHES_MENU);
         history.push(ROUTES.DISHES_MENU);
       } catch (error) {
         setError(MESSAGES.STORAGE_MESSAGE_ERROR);
@@ -75,7 +72,6 @@ const FormRegisterDish = () => {
             className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-5"
             role="alert"
           >
-            {/* <p className="font-bold">There was a mistake:</p> */}
             <p>{formik.errors.name} </p>
           </div>
         ) : null}
@@ -103,7 +99,6 @@ const FormRegisterDish = () => {
             className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-5"
             role="alert"
           >
-            <p className="font-bold">There was a mistake:</p>
             <p>{formik.errors.price} </p>
           </div>
         ) : null}
@@ -125,7 +120,7 @@ const FormRegisterDish = () => {
           >
             <option value="">-- Choose one --</option>
             <option value="breakfast"> Breakfast </option>
-            <option value="food"> Lunch </option>
+            <option value="lunch"> Lunch </option>
             <option value="dinner"> Dinner </option>
             <option value="drink"> Drinks </option>
             <option value="dessert"> Dessert </option>
@@ -137,7 +132,6 @@ const FormRegisterDish = () => {
             className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-5"
             role="alert"
           >
-            <p className="font-bold">There was a mistake:</p>
             <p>{formik.errors.category} </p>
           </div>
         ) : null}
@@ -163,16 +157,9 @@ const FormRegisterDish = () => {
             className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-5"
             role="alert"
           >
-            <p className="font-bold">There was a mistake:</p>
             <p>{formik.errors.description} </p>
           </div>
         ) : null}
-
-        {/* <input
-          type="submit"
-          className="bg-gray-800 hover:bg-gray-900 w-full mt-5 p-2 text-white uppercase font-bold"
-          value="Add Dish"
-        /> */}
         <Button type="submit">add dish</Button>
       </form>
     </>
