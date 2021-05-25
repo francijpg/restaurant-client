@@ -5,7 +5,6 @@ The purpose of the following application is to manage the orders of a restaurant
 - You can check the code for the mobile application [here.](https://github.com/francijpg/rn-restaurant-app)
 - You can check this application deployed [here.]()
 
-
 ## Features
 
 - Built with React 17
@@ -24,7 +23,7 @@ The purpose of the following application is to manage the orders of a restaurant
 
 ## Screenshots
 
-![DEMO](https://github.com/francijpg/restaurant-client/blob/main/src/assets/images/ss-1-login.png)
-![DEMO](https://github.com/francijpg/restaurant-client/blob/main/src/assets/images/ss-2-orders.png)
-![DEMO](https://github.com/francijpg/restaurant-client/blob/main/src/assets/images/ss-3-dishes.png)
-![DEMO](https://github.com/francijpg/restaurant-client/blob/main/src/assets/images/ss-4-create-dish.png)
+![DEMO](https://github.com/francijpg/restaurant-client/blob/master/src/assets/images/ss-1-login.png)
+![DEMO](https://github.com/francijpg/restaurant-client/blob/master/src/assets/images/ss-2-orders.png)
+![DEMO](https://github.com/francijpg/restaurant-client/blob/master/src/assets/images/ss-3-dishes.png)
+![DEMO](https://github.com/francijpg/restaurant-client/blob/master/src/assets/images/ss-4-create-dish.png)
